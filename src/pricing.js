@@ -5,11 +5,7 @@ export function pricingPage() {
     enableSearch();
   }
   // A/B test "Annual vs monthly plan first" (Flagsmith Experimentation)
-  if (flagsmith.getExperimentFlag("pricing_experiment").value === "annual_first") {
-    return renderPlans(["annual", "monthly"]);
-  } else {
-    return renderPlans(["monthly", "annual"]);
-  }
+  return renderPlans(["annual", "monthly"]);
 }
 
 export function onCheckoutClick() {
