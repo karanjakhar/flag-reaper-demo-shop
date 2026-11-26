@@ -6,8 +6,11 @@ flagsmith = Flagsmith(environment_key="ser.xxx")
 def place_order(user, cart):
     flags = flagsmith.get_identity_flags(user.id)
 
-    order = fast_path_order(cart)
-    audit("fast path")
+    if flags.is_feature_enabled("new_checkout"):
+        order = fast_path_order(cart)
+        audit("fast path")
+    else:
+        order = legacy_order(cart)
 
     if flags.is_feature_enabled("legacy_banner"):
         notify(user, "We moved!")

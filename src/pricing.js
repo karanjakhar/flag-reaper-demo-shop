@@ -1,9 +1,17 @@
 import flagsmith from "flagsmith";
 
 export function pricingPage() {
-  const variant = flagsmith.getValue("pricing_experiment"); // A/B test, still running
   if (flagsmith.hasFeature("beta_search")) {
     enableSearch();
   }
-  return variant === "annual_first" ? annualFirst() : monthlyFirst();
+  // A/B test "Annual vs monthly plan first" (Flagsmith Experimentation)
+  if (flagsmith.getExperimentFlag("pricing_experiment").value === "annual_first") {
+    return renderPlans(["annual", "monthly"]);
+  } else {
+    return renderPlans(["monthly", "annual"]);
+  }
+}
+
+export function onCheckoutClick() {
+  flagsmith.trackEvent("checkout_started");
 }
