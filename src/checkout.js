@@ -13,9 +13,6 @@ export function renderCheckout(cart) {
 
 export function header(user) {
   const parts = [logo()];
-  if (flagsmith.hasFeature("legacy_banner")) {
-    parts.push(banner("We moved! Update your bookmarks."));
-  }
   if (flagsmith.hasFeature("dark_mode")) {
     parts.push(themeToggle(user));
   }
