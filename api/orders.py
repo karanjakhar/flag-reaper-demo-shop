@@ -12,10 +12,7 @@ def place_order(user, cart):
     else:
         order = legacy_order(cart)
 
-    if flags.is_feature_enabled("legacy_banner"):
-        notify(user, "We moved!")
-    else:
-        notify(user, "Order placed")
+    notify(user, "Order placed")
 
     limit = flags.get_feature_value("max_upload_mb")
     return order, limit
@@ -23,6 +20,4 @@ def place_order(user, cart):
 
 def receipts(user):
     flags = flagsmith.get_identity_flags(user.id)
-    if not flags.is_feature_enabled("legacy_banner"):
-        return modern_receipts(user)
-    return old_receipts(user)
+    return modern_receipts(user)
